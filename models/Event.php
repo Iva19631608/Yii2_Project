@@ -2,7 +2,10 @@
 
 namespace app\models;
 
+use app\models\query\EventQuery;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "event".
@@ -13,8 +16,10 @@ use Yii;
  * @property string $end_at Дата конца
  * @property string $create_at
  * @property string $update_at
+ * @property int $author_id
+ * @property User $author
  */
-class Event extends \yii\db\ActiveRecord
+class Event extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -57,5 +62,12 @@ class Event extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\query\EventQuery(get_called_class());
+    }
+    /**
+     * @return ActiveQuery
+     */
+    public function getAuthor(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'author_id']);
     }
 }

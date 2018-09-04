@@ -2,22 +2,21 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use app\models\Event;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\EventSearch */
+/* @var $searchModel app\models\search\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Events';
+$this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="event-index">
+<div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Event', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,17 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'name',
-            'start_at',
-            'end_at',
-            //'create_at',
-            //'update_at',
-            [
-                'format' => 'raw',
-                'value' => function (Event $model) {
-                    return Html::a('JSON', ['event/json', 'id' => $model->id]);
-                }
-            ],
+            'username',
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
