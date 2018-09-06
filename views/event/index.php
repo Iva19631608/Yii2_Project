@@ -26,10 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'name',
-            'start_at',
-            'end_at',
+            [
+                'attribute' => 'start_at',
+                'format' => ['date', 'php:d.m.Y H:i:s'],
+            ],
+            [
+                'attribute' => 'end_at',
+                'format' => ['date', 'php:d.m.Y H:i:s'],
+            ],
+            'author.username',
             //'create_at',
             //'update_at',
             [
