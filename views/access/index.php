@@ -26,8 +26,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'note_id',
-            'user_id',
+//            'note_id',
+            [
+                 'label' => 'Заметка',
+                 'format' => 'raw',
+                 'value' => function (\app\models\Access $model){
+                 return Html::a($model->note->name,['note/view', 'id' => $model->note_id]);
+             }
+            ],
+//            'user_id',
+            [
+                'label' => 'Пользователь',
+                'format' => 'raw',
+                'value' => function (\app\models\Access $model){
+                    return Html::a($model->user->username,['user/view', 'id' => $model->user_id]);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

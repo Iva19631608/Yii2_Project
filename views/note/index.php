@@ -2,16 +2,19 @@
 use app\objects\NoteAccessChecker;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use app\models\Note;
+use app\objects\viewModels\NoteView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\NoteSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $viewModel NoteView */
 
 $this->title = 'Notes';
 $this->params['breadcrumbs'][] = $this->title;
 
-$isAllowedToWriteCallback = function (app\models\Note $note) {
-    return (new \app\objects\NoteAccessChecker())->isAllowedToWrite($note);
+$isAllowedToWriteCallback = function (Note $note) {
+    return (new NoteAccessChecker())->isAllowedToWrite($note);
 };
 ?>
     <div class="note-index">
@@ -28,12 +31,21 @@ $isAllowedToWriteCallback = function (app\models\Note $note) {
     'columns' => [
         ['class' => \yii\grid\SerialColumn::class],
         'name',
-        'author.username',
+        'text',
         [
+            'label' => 'Автор',
+            'format' => 'raw',
+            'value' => function (Note $model) use ($viewModel) {
+            return $viewModel->getUserLink($model);
+            }
+        ],
+        [
+            'label' => 'Дата создания',
             'attribute' => 'created_at',
             'format' => ['date', 'php:d.m.Y'],
         ],
         [
+            'label' => 'Дата редактирования',
             'attribute' => 'updated_at',
             'format' => ['date', 'php:d.m.Y H:i:s'],
         ],
@@ -42,13 +54,13 @@ $isAllowedToWriteCallback = function (app\models\Note $note) {
         //            'id',
         //            'name',
         //            'text',
-        //			[
-        //				'format' => 'raw',
-        //				'value' => function (Note $model) {
-        //    				return Html::a('JSON', ['note/json', 'id' => $model->id]);
-        //				}
-        //			],
-        //
+        			[
+        				'format' => 'raw',
+        				'value' => function (Note $model) {
+            				return Html::a('JSON', ['note/json', 'id' => $model->id]);
+        				}
+        			],
+
         [
             'class' => \yii\grid\ActionColumn::class,
             'visibleButtons' => [

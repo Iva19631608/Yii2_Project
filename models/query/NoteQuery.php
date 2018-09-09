@@ -4,13 +4,23 @@ use yii\db\ActiveQuery;
 class NoteQuery extends ActiveQuery
 {
     /**
+     * Фильтрует заметки доступные текущему пользователю
+     *
      * @return self
      */
-    public function onlyWithFooName(): self
+    public function forCurrentUser(): self
     {
-        $this->andWhere(['like', 'name', 'foo']);
+        $user = \Yii::$app->getUser();
+        $this
+            ->joinWith('access', true)
+            ->andWhere([
+                'or',
+                ['=', 'note.author_id', $user->getId()],
+                ['=', 'access.user_id', $user->getId()],
+            ]);
         return $this;
     }
+
     /**
      * @return self
      */

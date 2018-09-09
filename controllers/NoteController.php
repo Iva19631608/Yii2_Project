@@ -5,11 +5,16 @@ namespace app\controllers;
 use Yii;
 use app\models\Note;
 use app\models\search\NoteSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
-use app\objects\viewModels\NoteIndexView;
+use app\behaviors\NoteAccessBehavior;
+use app\objects\NoteAccessChecker;
+use app\objects\viewModels\NoteView;
+use yii\web\ForbiddenHttpException;
+
 
 /**
  * NoteController implements the CRUD actions for Note model.
@@ -28,6 +33,20 @@ class NoteController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'noteAccess' => [
+                'class' => NoteAccessBehavior::class,
+                'except' => ['index', 'list'],
+                'rules' => [
+                    ['allow' => true, 'roles' => ['@']],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index'],
+                'rules' => [
+                    ['allow' => true, 'roles' => ['@']],
+                ],
+            ],
         ];
     }
 
@@ -39,14 +58,28 @@ class NoteController extends Controller
     {
         $searchModel = new NoteSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $viewModel = new NoteIndexView();
+        $viewModel = new NoteView();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'viewModel' => $viewModel,
         ]);
     }
-
+    /**
+     * @return mixed
+     */
+    public function actionList()
+    {
+        $searchModel = new NoteSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $viewModel = new NoteView();
+        return $this->render('list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'viewModel' => $viewModel,
+        ]);
+    }
+    /**
     /**
      * Displays a single Note model.
      * @param integer $id
@@ -55,8 +88,10 @@ class NoteController extends Controller
      */
     public function actionView($id)
     {
+        $viewModel = new NoteView();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'viewModel' => $viewModel,
         ]);
     }
 
@@ -122,7 +157,11 @@ class NoteController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (!(new NoteAccessChecker)->isAllowedToWrite($model)) {
+            throw new ForbiddenHttpException('У Вас нет доступа');
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }

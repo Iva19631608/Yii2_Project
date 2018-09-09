@@ -42,11 +42,13 @@ class NoteSearch extends Note
     public function search($params)
     {
         $query = Note::find();
+        $query->forCurrentUser();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => ['pageSize' => 10],
         ]);
 
         $this->load($params);

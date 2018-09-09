@@ -62,4 +62,27 @@ class Note extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);
     }
+    /**
+     * @inheritdoc
+     * @throws \yii\base\Exception
+     */
+    public function beforeSave($insert): bool
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if (!$this->author_id) {
+            $this->author_id = \Yii::$app->user->getId();
+        }
+
+            return true;
+    }
+    /**
+     * @return ActiveQuery
+     */
+    public function getAccess(): ActiveQuery
+    {
+        return $this->hasMany(Access::class, ['note_id' => 'id']);
+    }
 }
