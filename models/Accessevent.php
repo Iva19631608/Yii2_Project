@@ -54,7 +54,7 @@ class Accessevent extends \yii\db\ActiveRecord
      */
     public function getEvent()
     {
-        return $this->hasOne(Event::className(), ['id' => 'event_id']);
+        return $this->hasOne(Event::class, ['id' => 'event_id']);
     }
 
     /**
@@ -62,7 +62,7 @@ class Accessevent extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**

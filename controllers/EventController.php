@@ -9,6 +9,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\filters\AccessControl;
+use app\behaviors\EventAccessBehavior;
+use app\objects\EventAccessChecker;
+use app\objects\viewModels\EventView;
+use yii\web\ForbiddenHttpException;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -27,6 +32,20 @@ class EventController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'eventAccess' => [
+                'class' => EventAccessBehavior::class,
+                'except' => ['index'],
+                'rules' => [
+                    ['allow' => true, 'roles' => ['@']],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index'],
+                'rules' => [
+                    ['allow' => true, 'roles' => ['@']],
+                ],
+            ],
         ];
     }
 
@@ -38,10 +57,12 @@ class EventController extends Controller
     {
         $searchModel = new EventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $viewModel = new EventView();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'viewModel' => $viewModel,
         ]);
     }
 
@@ -53,8 +74,10 @@ class EventController extends Controller
      */
     public function actionView($id)
     {
+        $viewModel = new EventView();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'viewModel' => $viewModel,
         ]);
     }
 

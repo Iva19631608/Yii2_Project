@@ -54,7 +54,22 @@ class Event extends ActiveRecord
             'update_at' => 'Update At',
         ];
     }
+    /**
+     * @inheritdoc
+     * @throws \yii\base\Exception
+     */
+    public function beforeSave($insert): bool
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
 
+        if (!$this->author_id) {
+            $this->author_id = \Yii::$app->user->getId();
+        }
+
+        return true;
+    }
     /**
      * @inheritdoc
      * @return \app\models\query\EventQuery the active query used by this AR class.
@@ -69,5 +84,12 @@ class Event extends ActiveRecord
     public function getAuthor(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);
+    }
+    /**
+     * @return ActiveQuery
+     */
+    public function getAccessevent(): ActiveQuery
+    {
+        return $this->hasMany(Accessevent::class, ['event_id' => 'id']);
     }
 }

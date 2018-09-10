@@ -1,20 +1,28 @@
 <?php
 
 namespace app\models\query;
+
 use yii\db\ActiveQuery;
 
-/**
- * This is the ActiveQuery class for [[\app\models\Event]].
- *
- * @see \app\models\Event
- */
 class EventQuery extends ActiveQuery
 {
-    /*public function active()
+    /**
+     * Фильтрует мероприятия, доступные текущему пользователю
+     *
+     * @return self
+     */
+    public function forCurrentUser(): self
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
+        $user = \Yii::$app->getUser();
+        $this
+            ->joinWith('accessevent', true)
+            ->andWhere([
+                'or',
+                ['=', 'event.author_id', $user->getId()],
+                ['=', 'accessevent.user_id', $user->getId()],
+            ]);
+        return $this;
+    }
     /**
      * @inheritdoc
      * @return \app\models\Event[]|array

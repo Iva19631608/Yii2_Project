@@ -80,7 +80,6 @@ class NoteController extends Controller
         ]);
     }
     /**
-    /**
      * Displays a single Note model.
      * @param integer $id
      * @return mixed

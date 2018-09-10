@@ -42,6 +42,7 @@ class EventSearch extends Event
     public function search($params)
     {
         $query = Event::find();
+        $query->forCurrentUser();
 
         // add conditions that should always apply here
 

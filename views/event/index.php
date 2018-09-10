@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Event;
+use app\objects\EventAccessChecker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\EventSearch */
@@ -10,6 +11,9 @@ use app\models\Event;
 
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
+$isAllowedToWriteCallback = function (Event $event) {
+    return (new EventAccessChecker())->isAllowedToWrite($event);
+};
 ?>
 <div class="event-index">
 
@@ -35,7 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'end_at',
                 'format' => ['date', 'php:d.m.Y H:i:s'],
             ],
-            'author.username',
+            [
+                'label' => 'Автор',
+                'format' => 'raw',
+                'value' => function (Event $model) use ($viewModel) {
+                    return $viewModel->getUserLink($model);
+                }
+            ],
+            //'author.username',
             //'create_at',
             //'update_at',
             [
@@ -44,7 +55,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a('JSON', ['event/json', 'id' => $model->id]);
                 }
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => \yii\grid\ActionColumn::class,
+                'visibleButtons' => [
+                    'view' => function (\app\models\Event $model) {
+                        return (new EventAccessChecker())->isAllowedToRead($model);
+                    },
+                    'update' => $isAllowedToWriteCallback,
+                    'delete' => $isAllowedToWriteCallback,
+                ],
+            ],
         ],
     ]); ?>
 </div>

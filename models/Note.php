@@ -55,13 +55,7 @@ class Note extends ActiveRecord
             'text' => 'Содержание',
         ];
     }
-    /**
-     * @return ActiveQuery
-     */
-    public function getAuthor(): ActiveQuery
-    {
-        return $this->hasOne(User::class, ['id' => 'author_id']);
-    }
+
     /**
      * @inheritdoc
      * @throws \yii\base\Exception
@@ -84,5 +78,12 @@ class Note extends ActiveRecord
     public function getAccess(): ActiveQuery
     {
         return $this->hasMany(Access::class, ['note_id' => 'id']);
+    }
+    /**
+     * @return ActiveQuery
+     */
+    public function getAuthor(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'author_id']);
     }
 }

@@ -44,9 +44,17 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Таблица', 'url' => ['note/index']],
                     ['label' => 'Список', 'url' => ['note/list']],
+                    ['label' => 'Доступы', 'url' => ['/access']],
                 ],
             ],
-            ['label' => 'Доступы', 'url' => ['/access']],
+            [
+                'label' => 'События',
+                'url' => ['/'],
+                'items' => [
+                    ['label' => 'Таблица', 'url' => ['/event']],
+                    ['label' => 'Доступы', 'url' => ['/accessevent']],
+                ],
+            ],
             ['label' => 'Обратная связь', 'url' => ['/site/feedback']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (

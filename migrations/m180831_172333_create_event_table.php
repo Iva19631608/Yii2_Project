@@ -17,8 +17,8 @@ class m180831_172333_create_event_table extends Migration
             'name' => $this->string()->comment('Название мероприятия'),
             'start_at' => $this->timestamp()->defaultExpression('NOW()')->comment('Дата начала'),
             'end_at' => $this->timestamp()->defaultExpression('NOW()')->comment('Дата конца'),
-            'create_at' => $this->timestamp(),
-            'update_at' => $this->timestamp(),
+            'create_at' => $this->timestamp()->defaultExpression('NOW()'),
+            'update_at' => $this->timestamp()->defaultExpression('NOW()'),
         ]);
     }
 
