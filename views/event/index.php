@@ -8,6 +8,7 @@ use app\objects\EventAccessChecker;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\EventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $viewModel EventView */
 
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
@@ -61,7 +62,9 @@ $isAllowedToWriteCallback = function (Event $event) {
                     'view' => function (\app\models\Event $model) {
                         return (new EventAccessChecker())->isAllowedToRead($model);
                     },
-                    'update' => $isAllowedToWriteCallback,
+                    'update' => function (\app\models\Event $model) {
+                        return (new EventAccessChecker())->isAllowedToUpdate($model);
+                    },
                     'delete' => $isAllowedToWriteCallback,
                 ],
             ],

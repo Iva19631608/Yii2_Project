@@ -34,7 +34,7 @@ class EventController extends Controller
             ],
             'eventAccess' => [
                 'class' => EventAccessBehavior::class,
-                'except' => ['index'],
+                'except' => ['index', 'create'],
                 'rules' => [
                     ['allow' => true, 'roles' => ['@']],
                 ],
@@ -114,6 +114,12 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if (!(new EventAccessChecker)->isAllowedToWrite($model)) {
+            throw new ForbiddenHttpException('У Вас нет доступа');
+        }
+        if ( strtotime($model->start_at)< time()) {
+            throw new ForbiddenHttpException('Нельзя редактировать проведенное мероприятие');
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -133,8 +139,11 @@ class EventController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        if (!(new EventAccessChecker)->isAllowedToWrite($model)) {
+            throw new ForbiddenHttpException('У Вас нет доступа');
+        }
+        $model->delete();
         return $this->redirect(['index']);
     }
 

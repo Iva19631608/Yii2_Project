@@ -23,7 +23,7 @@ class EventAccessBehavior extends AccessControl
         return true;
     }
     /**
-     * Finds the Note model based on its primary key value.
+     * Finds the Event model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
      * @return Event the loaded model

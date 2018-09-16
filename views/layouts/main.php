@@ -39,20 +39,20 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             [
+                'label' => 'События',
+                'url' => ['/'],
+                'items' => [
+                    ['label' => 'Таблица', 'url' => ['/event']],
+                    ['label' => 'Доступы', 'url' => ['/accessevent']],
+                ],
+            ],
+            [
                 'label' => 'Заметки',
                 'url' => ['/'],
                 'items' => [
                     ['label' => 'Таблица', 'url' => ['note/index']],
                     ['label' => 'Список', 'url' => ['note/list']],
                     ['label' => 'Доступы', 'url' => ['/access']],
-                ],
-            ],
-            [
-                'label' => 'События',
-                'url' => ['/'],
-                'items' => [
-                    ['label' => 'Таблица', 'url' => ['/event']],
-                    ['label' => 'Доступы', 'url' => ['/accessevent']],
                 ],
             ],
             ['label' => 'Обратная связь', 'url' => ['/site/feedback']],

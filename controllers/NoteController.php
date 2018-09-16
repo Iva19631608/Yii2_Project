@@ -35,7 +35,7 @@ class NoteController extends Controller
             ],
             'noteAccess' => [
                 'class' => NoteAccessBehavior::class,
-                'except' => ['index', 'list'],
+                'except' => ['index', 'list', 'create'],
                 'rules' => [
                     ['allow' => true, 'roles' => ['@']],
                 ],
@@ -123,6 +123,10 @@ class NoteController extends Controller
     {
         $model = $this->findModel($id);
 
+        if (!(new NoteAccessChecker)->isAllowedToWrite($model)) {
+            throw new ForbiddenHttpException('У Вас нет доступа');
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -130,20 +134,6 @@ class NoteController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-    }
-    /**
-     * Вывод модели в виде json объекта
-     *
-     * @param int $id
-     *
-     * @return array
-     * @throws NotFoundHttpException
-     */
-    public function actionJson(int $id): array
-    {
-        \Yii::$app->getResponse()->format = Response::FORMAT_JSON;
-        $note = $this->findModel($id);
-        return $note->toArray();
     }
 
 
@@ -180,4 +170,19 @@ class NoteController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+    /**
+     * Вывод модели в виде json объекта
+     *
+     * @param int $id
+     *
+     * @return array
+     * @throws NotFoundHttpException
+     */
+    public function actionJson(int $id): array
+    {
+        \Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $note = $this->findModel($id);
+        return $note->toArray();
+    }
+
 }

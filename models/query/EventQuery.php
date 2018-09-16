@@ -19,7 +19,7 @@ class EventQuery extends ActiveQuery
             ->andWhere([
                 'or',
                 ['=', 'event.author_id', $user->getId()],
-                ['=', 'accessevent.user_id', $user->getId()],
+                ['=', 'access_event.user_id', $user->getId()],
             ]);
         return $this;
     }

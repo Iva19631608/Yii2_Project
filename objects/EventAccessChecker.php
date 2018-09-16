@@ -35,4 +35,13 @@ class EventAccessChecker
             ->count('id');
         return $count > 0;
     }
+    /**
+     * @param Event $event
+     *
+     * @return bool
+     */
+    public function isAllowedToUpdate(Event $event): bool
+    {
+        return $this->isAllowedToWrite($event) && (strtotime($event->start_at) >= time());
+    }
 }

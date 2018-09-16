@@ -32,6 +32,7 @@ class NoteAccessChecker
                 ]
             )
             ->count('id');
+//        var_dump($count);
         return $count > 0;
     }
 } 

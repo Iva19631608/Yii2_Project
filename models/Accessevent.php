@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "accessevent".
+ * This is the model class for table "access_event".
  *
  * @property int $id
  * @property int $event_id
@@ -21,7 +21,7 @@ class Accessevent extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'accessevent';
+        return 'access_event';
     }
 
     /**
@@ -32,8 +32,8 @@ class Accessevent extends \yii\db\ActiveRecord
         return [
             [['event_id', 'user_id'], 'required'],
             [['event_id', 'user_id'], 'integer'],
-            [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['event_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['event_id'], 'exist', 'skipOnError' => true, 'targetClass' => Event::class, 'targetAttribute' => ['event_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
