@@ -26,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-//            'note_id',
             [
                  'label' => 'Заметка',
                  'format' => 'raw',
@@ -34,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                  return Html::a($model->note->name,['note/view', 'id' => $model->note_id]);
              }
             ],
-//            'user_id',
             [
                 'label' => 'Пользователь',
                 'format' => 'raw',

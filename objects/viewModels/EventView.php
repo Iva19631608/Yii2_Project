@@ -3,6 +3,7 @@ namespace app\objects\viewModels;
 use app\models\Event;
 use app\objects\EventAccessChecker;
 use yii\helpers\Html;
+use yii\caching\DbDependency;
 
 class EventView
 {
@@ -31,5 +32,17 @@ class EventView
     public function getUserLink(Event $model): string
     {
         return Html::a($model->author->username, ['user/view', 'id' => $model->author_id]);
+    }
+    /**
+     * @return array
+     */
+    public function getCacheParams(): array
+    {
+        $dependency = new DbDependency();
+        $dependency->sql = 'SELECT COUNT(id) FROM event';
+        return [
+            'duration' => 3600,
+            'dependency' => $dependency
+        ];
     }
 }

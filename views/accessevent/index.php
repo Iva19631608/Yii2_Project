@@ -26,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-//            'event_id',
               [
                  'label' => 'Событие',
                 'format' => 'raw',
@@ -34,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                  return Html::a($model->event->name,['event/view', 'id' => $model->event_id]);
                  }
              ],
-//            'user_id',
             [
                 'label' => 'Пользователь',
                 'format' => 'raw',

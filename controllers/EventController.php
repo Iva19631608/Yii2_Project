@@ -14,6 +14,7 @@ use app\behaviors\EventAccessBehavior;
 use app\objects\EventAccessChecker;
 use app\objects\viewModels\EventView;
 use yii\web\ForbiddenHttpException;
+use yii\filters\HttpCache;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -27,7 +28,7 @@ class EventController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -46,6 +47,15 @@ class EventController extends Controller
                     ['allow' => true, 'roles' => ['@']],
                 ],
             ],
+            'httpCache' => [
+                'class' => HttpCache::class,
+                'only' => ['view'],
+                'lastModified' => function () {
+                    $id = \Yii::$app->request->get('id');
+                    $model = $this->findModel($id);
+                    return $model ? \strtotime($model->update_at) : 0;
+                }
+            ]
         ];
     }
 

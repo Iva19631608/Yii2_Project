@@ -49,11 +49,6 @@ $isAllowedToWriteCallback = function (Note $note) {
             'attribute' => 'updated_at',
             'format' => ['date', 'php:d.m.Y H:i:s'],
         ],
-        //            ['class' => 'yii\grid\SerialColumn'],
-        //
-        //            'id',
-        //            'name',
-        //            'text',
         			[
         				'format' => 'raw',
         				'value' => function (Note $model) {

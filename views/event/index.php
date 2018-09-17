@@ -24,7 +24,7 @@ $isAllowedToWriteCallback = function (Event $event) {
     <p>
         <?= Html::a('Create Event', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    <?php if ($this->beginCache('view_event_index', $viewModel->getCacheParams())):?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -47,9 +47,6 @@ $isAllowedToWriteCallback = function (Event $event) {
                     return $viewModel->getUserLink($model);
                 }
             ],
-            //'author.username',
-            //'create_at',
-            //'update_at',
             [
                 'format' => 'raw',
                 'value' => function (Event $model) {
@@ -70,4 +67,6 @@ $isAllowedToWriteCallback = function (Event $event) {
             ],
         ],
     ]); ?>
+    <?php $this->endCache();?>
+    <?php endif;?>
 </div>

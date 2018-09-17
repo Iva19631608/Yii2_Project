@@ -21,6 +21,7 @@ $config = [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+            //lass' => 'yii\caching\DummyCache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
