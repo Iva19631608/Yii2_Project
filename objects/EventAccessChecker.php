@@ -1,6 +1,6 @@
 <?php
 namespace app\objects;
-use app\models\Accessevent;
+use app\models\AccessEvent;
 use app\models\Event;
 
 class EventAccessChecker
@@ -25,7 +25,7 @@ class EventAccessChecker
             return true;
         }
         $userId = \Yii::$app->user->getId();
-        $count = (int)Accessevent::find()
+        $count = (int)AccessEvent::find()
             ->andWhere(
                 [
                     'event_id' => $event->id,

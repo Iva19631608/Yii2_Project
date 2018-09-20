@@ -41,7 +41,7 @@ class EventView
         $dependency = new DbDependency();
         $dependency->sql = 'SELECT COUNT(id) FROM event';
         return [
-            'duration' => 3600,
+            'duration' => 60,
             'dependency' => $dependency
         ];
     }

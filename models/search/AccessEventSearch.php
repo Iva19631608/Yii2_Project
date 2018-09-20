@@ -5,12 +5,12 @@ namespace app\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Accessevent;
+use app\models\AccessEvent;
 
 /**
- * AccesseventSearch represents the model behind the search form of `app\models\Accessevent`.
+ * AccessEventSearch represents the model behind the search form of `app\models\AccessEvent`.
  */
-class AccesseventSearch extends Accessevent
+class AccessEventSearch extends AccessEvent
 {
     /**
      * @inheritdoc
@@ -40,7 +40,7 @@ class AccesseventSearch extends Accessevent
      */
     public function search($params)
     {
-        $query = Accessevent::find();
+        $query = AccessEvent::find();
 
         // add conditions that should always apply here
 

@@ -2,8 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use app\models\Event;
-use app\objects\EventAccessChecker;
+use app\objects\viewModels\EventView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Event */
@@ -19,7 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php if ($viewModel->isAuthor($model)): ?>
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php if (strtotime($model->start_at) > time()) :?>
+             <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php endif;?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -29,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
     <?php endif;?>
-    <?php if ($this->beginCache('view_event', ['duration' => 60])):?>
+    <?php // if ($this->beginCache('view_event', ['duration' => 60])):?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -37,10 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'start_at',
             'end_at',
-            'create_at',
-            'update_at',
         ],
     ]) ?>
-    <?php $this->endCache();?>
-    <?php endif;?>
+    <?php //$this->endCache();?>
+    <?php //endif;?>
 </div>

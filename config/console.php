@@ -14,8 +14,8 @@ $config = [
     ],
     'components' => [
         'cache' => [
-//            'class' => 'yii\caching\FileCache',
-            'class' => 'DummyCache::class',
+            'class' => 'yii\caching\FileCache',
+//            'class' => 'yii\caching\DummyCache',
         ],
         'log' => [
             'targets' => [

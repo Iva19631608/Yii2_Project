@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\AccesseventSearch */
+/* @var $searchModel app\models\search\AccessEventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Accessevents';
@@ -25,18 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-              [
+            [
                  'label' => 'Событие',
                 'format' => 'raw',
-                 'value' => function (\app\models\Accessevent $model){
+                 'value' => function (\app\models\AccessEvent $model){
                  return Html::a($model->event->name,['event/view', 'id' => $model->event_id]);
                  }
-             ],
+            ],
             [
                 'label' => 'Пользователь',
                 'format' => 'raw',
-                'value' => function (\app\models\Accessevent $model){
+                'value' => function (\app\models\AccessEvent $model){
                     return Html::a($model->user->username,['user/view', 'id' => $model->user_id]);
                 }
             ],

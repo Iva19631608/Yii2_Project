@@ -47,15 +47,15 @@ class EventController extends Controller
                     ['allow' => true, 'roles' => ['@']],
                 ],
             ],
-            'httpCache' => [
-                'class' => HttpCache::class,
-                'only' => ['view'],
-                'lastModified' => function () {
-                    $id = \Yii::$app->request->get('id');
-                    $model = $this->findModel($id);
-                    return $model ? \strtotime($model->update_at) : 0;
-                }
-            ]
+//            'httpCache' => [
+//                'class' => HttpCache::class,
+//                'only' => ['view'],
+//                'lastModified' => function () {
+//                    $id = \Yii::$app->request->get('id');
+//                    $model = $this->findModel($id);
+//                    return $model ? \strtotime($model->update_at) : 0;
+//                }
+//            ]
         ];
     }
 

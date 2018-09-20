@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Accessevent;
-use app\models\search\AccesseventSearch;
+use app\models\AccessEvent;
+use app\models\search\AccessEventSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,12 +37,12 @@ class AccesseventController extends Controller
     }
 
     /**
-     * Lists all Accessevent models.
+     * Lists all AccessEvent models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AccesseventSearch();
+        $searchModel = new AccessEventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -52,7 +52,7 @@ class AccesseventController extends Controller
     }
 
     /**
-     * Displays a single Accessevent model.
+     * Displays a single AccessEvent model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -65,13 +65,13 @@ class AccesseventController extends Controller
     }
 
     /**
-     * Creates a new Accessevent model.
+     * Creates a new AccessEvent model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Accessevent();
+        $model = new AccessEvent();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -83,7 +83,7 @@ class AccesseventController extends Controller
     }
 
     /**
-     * Updates an existing Accessevent model.
+     * Updates an existing AccessEvent model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -103,7 +103,7 @@ class AccesseventController extends Controller
     }
 
     /**
-     * Deletes an existing Accessevent model.
+     * Deletes an existing AccessEvent model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -117,15 +117,15 @@ class AccesseventController extends Controller
     }
 
     /**
-     * Finds the Accessevent model based on its primary key value.
+     * Finds the AccessEvent model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Accessevent the loaded model
+     * @return AccessEvent the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Accessevent::findOne($id)) !== null) {
+        if (($model = AccessEvent::findOne($id)) !== null) {
             return $model;
         }
 

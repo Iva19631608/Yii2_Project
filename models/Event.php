@@ -90,6 +90,6 @@ class Event extends ActiveRecord
      */
     public function getAccessevent(): ActiveQuery
     {
-        return $this->hasMany(Accessevent::class, ['event_id' => 'id']);
+        return $this->hasMany(AccessEvent::class, ['event_id' => 'id']);
     }
 }

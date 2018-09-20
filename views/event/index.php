@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Event;
 use app\objects\EventAccessChecker;
+use app\objects\viewModels\EventView;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\EventSearch */
@@ -24,7 +26,7 @@ $isAllowedToWriteCallback = function (Event $event) {
     <p>
         <?= Html::a('Create Event', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?php if ($this->beginCache('view_event_index', $viewModel->getCacheParams())):?>
+  <?php // if($this->beginCache('view_event_index', $viewModel->getCacheParams())): ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -67,6 +69,6 @@ $isAllowedToWriteCallback = function (Event $event) {
             ],
         ],
     ]); ?>
-    <?php $this->endCache();?>
-    <?php endif;?>
+  <?php // $this->endCache();?>
+  <?php // endif;?>
 </div>

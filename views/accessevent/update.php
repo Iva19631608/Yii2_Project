@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Accessevent */
+/* @var $model app\models\AccessEvent */
 
 $this->title = 'Update Accessevent: '. $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Accessevents', 'url' => ['index']];

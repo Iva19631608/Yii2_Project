@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Accessevent */
+/* @var $model app\models\AccessEvent */
 
 $this->title = 'Create Accessevent';
 $this->params['breadcrumbs'][] = ['label' => 'Accessevents', 'url' => ['index']];
